@@ -14,24 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with pd4words. If not, see <http://www.gnu.org/licenses/>.
 #
-from biblio import Biblio
-from common import chunked
-from dateutil.parser import isoparse
-from peewee import fn
-import os
+import itertools
 
-def Curate (database : str) -> dict[int, str]:
+def chunked (it, size):
 
-  biblio = Biblio (database)
-  books = {}
+  it = iter (it)
 
-  Books = biblio.Books
-  years = Books.select (fn.strftime ('%Y', Books.pubdate)).order_by (fn.strftime ('%Y', Books.pubdate))
+  while True:
 
-  for year in years.scalars ():
+    chunk = tuple (itertools.islice (it, size))
 
-    sample = Books.select (Books.path).where (fn.strftime ('%Y', Books.pubdate) == str (year)).limit (10)
-    sample = [ book for book in sample.scalars () ]
-    books [year] = sample
-
-  return books
+    if not chunk:
+      return
+    yield chunk

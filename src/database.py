@@ -19,7 +19,7 @@ from peewee import MySQLDatabase
 
 mysqlmap = { 'hostname' : 'host', 'password' : 'passwd', 'username' : 'user' }
 
-def Database (config_file = None, namespace = None, **kwargs):
+def Config (config_file = None, namespace = None, mapping = None, **kwargs):
 
   config = { }
 
@@ -47,11 +47,17 @@ def Database (config_file = None, namespace = None, **kwargs):
 
       config [name] = value
 
-  for from_name, to_name in mysqlmap.items ():
+  if mapping != None:
 
-    try:
-      config [to_name] = config [from_name]
-      del config [from_name]
-    except KeyError: pass
+    for from_name, to_name in mapping.items ():
 
-  return MySQLDatabase (**config)
+      try:
+        config [to_name] = config [from_name]
+        del config [from_name]
+      except KeyError: pass
+
+  return config
+
+def MySQLConfig (config_file = None, namespace = None, **kwargs):
+
+  return Config (config_file, namespace, mapping = mysqlmap, **kwargs)

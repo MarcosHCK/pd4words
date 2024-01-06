@@ -14,30 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with pd4words. If not, see <http://www.gnu.org/licenses/>.
 #
+from common import chunked
 from peewee import fn
 from words import Words
-import itertools
-
-batchsz = 128
-
-def chunked (it, size):
-
-  it = iter (it)
-
-  while True:
-
-    chunk = tuple (itertools.islice (it, size))
-
-    if not chunk:
-      return
-    yield chunk
 
 def Complexity (words : dict[str, int]) -> float:
 
   total = Words.select (fn.SUM (Words.freq)).scalar ()
   rank = 0
 
-  for chunk in chunked (words.keys (), batchsz):
+  for chunk in chunked (words.keys (), 128):
 
     chunk = Words.select (Words.word, Words.freq).where (Words.word.in_ (chunk)).order_by (Words.word)
 

@@ -37,7 +37,7 @@ def program ():
 
   # Subsystems
   parser.add_argument ('--complexity', help = 'Measure EBook language-wise complexity', metavar = 'FILE', type = str)
-  parser.add_argument ('--curate', help = 'Compile a list of books per year from Calibe-compatible library', metavar = 'DIRECTORY', type = str)
+  parser.add_argument ('--curate', help = 'Compile a list of books per year from Calibe-compatible library metadata', metavar = 'FILE', type = str)
   parser.add_argument ('--length', help = 'Measure EBook language-wise length', metavar = 'FILE', type = str)
   parser.add_argument ('--repetitiveness', help = 'Measure EBook language-wise repetitiveness', metavar = 'FILE', type = str)
 
@@ -73,7 +73,7 @@ def program ():
 
   elif args.curate != None:
 
-    books = Curate (args.curate, language = language.part3)
+    books = Curate (args.curate)
     books = json.dumps (books, indent = 2)
 
     print (books)

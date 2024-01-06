@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with pd4words. If not, see <http://www.gnu.org/licenses/>.
 #
-from database import Database
+from database import MySQLConfig
 from peewee import AutoField
 from peewee import CharField
 from peewee import CompositeKey
@@ -22,10 +22,12 @@ from peewee import DateField
 from peewee import FloatField
 from peewee import IntegerField
 from peewee import Model
+from peewee import MySQLDatabase
 from peewee import SQL
 from peewee import TextField
 
-database = Database ('.environment', 'Words', **{'charset': 'utf8', 'sql_mode': 'PIPES_AS_CONCAT', 'use_unicode': True })
+config = MySQLConfig ('.environment', 'Words', **{'charset': 'utf8', 'sql_mode': 'PIPES_AS_CONCAT', 'use_unicode': True })
+database = MySQLDatabase (**config)
 
 class UnknownField(object):
     def __init__(self, *_, **__): pass
