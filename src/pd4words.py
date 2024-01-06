@@ -18,13 +18,13 @@ from argparse import ArgumentParser
 from article import Article
 from curate import Curate
 from ebook import Ebook
+from iso639 import Language
+from iso639.language import LanguageNotFoundError
 from measures import Complexity
 from measures import Length
 from measures import Repetitiveness
-from iso639 import Language
-from iso639.language import LanguageNotFoundError
+from plot import Plot
 import json, nltk, os
-from json import JSONEncoder
 
 nltk_models = [ 'punkt', 'wordnet' ]
 nltk_path = os.path.realpath ('./nltk/')
@@ -43,6 +43,7 @@ def program ():
   parser.add_argument ('--complexity', help = 'Measure EBook language-wise complexity', metavar = 'FILE', type = str)
   parser.add_argument ('--curate', help = 'Compile a list of books per year from Calibe-compatible library metadata', metavar = 'FILE', type = str)
   parser.add_argument ('--length', help = 'Measure EBook language-wise length', metavar = 'FILE', type = str)
+  parser.add_argument ('--plot', help = 'Plot some article statistic from FILE', metavar = 'FILE', type = str)
   parser.add_argument ('--repetitiveness', help = 'Measure EBook language-wise repetitiveness', metavar = 'FILE', type = str)
 
   args = parser.parse_args ()
@@ -95,6 +96,10 @@ def program ():
     words = ebook.words ()
 
     print (Length (words))
+
+  elif args.plot != None:
+
+    Plot (args.plot)
 
   elif args.repetitiveness != None:
 
