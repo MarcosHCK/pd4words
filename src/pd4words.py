@@ -15,11 +15,15 @@
 # along with pd4words. If not, see <http://www.gnu.org/licenses/>.
 #
 from argparse import ArgumentParser
+from curate import Curate
 from ebook import Ebook
 from measures import Complexity
 from measures import Length
 from measures import Repetitiveness
-import nltk, os
+from iso639 import Language
+from iso639.language import LanguageNotFoundError
+import json, nltk, os
+from json import JSONEncoder
 
 nltk_models = [ 'punkt', 'wordnet' ]
 nltk_path = os.path.realpath ('./nltk/')
@@ -33,6 +37,7 @@ def program ():
 
   # Subsystems
   parser.add_argument ('--complexity', help = 'Measure EBook language-wise complexity', metavar = 'FILE', type = str)
+  parser.add_argument ('--curate', help = 'Compile a list of books per year from Calibe-compatible library', metavar = 'DIRECTORY', type = str)
   parser.add_argument ('--length', help = 'Measure EBook language-wise length', metavar = 'FILE', type = str)
   parser.add_argument ('--repetitiveness', help = 'Measure EBook language-wise repetitiveness', metavar = 'FILE', type = str)
 
@@ -54,25 +59,35 @@ def program ():
 
       nltk.download (model, download_dir = nltk_path)
 
-  language = args.language
+  try:
+    language = Language.from_name (args.language)
+  except LanguageNotFoundError:
+    language = Language.from_name (args.language.capitalize ())
 
   if args.complexity != None:
 
-    ebook = Ebook (args.complexity, language = language)
+    ebook = Ebook (args.complexity, language = language.name.lower ())
     words = ebook.words ()
 
     print (Complexity (words))
 
+  elif args.curate != None:
+
+    books = Curate (args.curate, language = language.part3)
+    books = json.dumps (books, indent = 2)
+
+    print (books)
+
   elif args.length != None:
 
-    ebook = Ebook (args.length, language = language)
+    ebook = Ebook (args.length, language = language.name.lower ())
     words = ebook.words ()
 
     print (Length (words))
 
   elif args.repetitiveness != None:
 
-    ebook = Ebook (args.repetitiveness, language = language)
+    ebook = Ebook (args.repetitiveness, language = language.name.lower ())
     words = ebook.words ()
 
     print (Repetitiveness (words))
