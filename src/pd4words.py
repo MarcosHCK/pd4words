@@ -17,6 +17,7 @@
 from argparse import ArgumentParser
 from ebook import Ebook
 from measures import Complexity
+from measures import Repetitiveness
 import nltk, os
 
 nltk_models = [ 'punkt', 'wordnet' ]
@@ -31,6 +32,7 @@ def program ():
 
   # Subsystems
   parser.add_argument ('--complexity', help = 'Measure EBook language complexity', metavar = 'FILE', type = str)
+  parser.add_argument ('--repetitiveness', help = 'Measure EBook language repetitiveness', metavar = 'FILE', type = str)
 
   args = parser.parse_args ()
 
@@ -58,5 +60,12 @@ def program ():
     words = ebook.words ()
 
     print (Complexity (words))
+
+  elif args.repetitiveness != None:
+
+    ebook = Ebook (args.repetitiveness, language = language)
+    words = ebook.words ()
+
+    print (Repetitiveness (words))
 
 program ()

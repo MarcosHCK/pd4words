@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with pd4words. If not, see <http://www.gnu.org/licenses/>.
 #
-from words import Words
 from peewee import fn
+from words import Words
 import itertools
 
 batchsz = 128
@@ -47,3 +47,9 @@ def Complexity (words : dict[str, int]) -> float:
       rank = rank + words [word] * oddiness
 
   return rank
+
+def Repetitiveness (words : dict[str, int]) -> float:
+
+  total = sum (words.values ())
+  fract = len (words) / total
+  return fract

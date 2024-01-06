@@ -37,10 +37,27 @@ class Ebook ():
       text = text + ' ' + document.get_text ()
     return text
 
+  def text (self):
+
+    sentences = []
+    text = self.glob ()
+
+    for sentence in nltk.sent_tokenize (text, language = self.language):
+
+      sentence = nltk.word_tokenize (sentence, language = self.language)
+      sentences.append (sentence)
+
+    text = ''
+
+    for word in ( word for sentence in sentences for word in sentence ):
+
+      text = text + ' ' + word
+
+    return text
+
   def words (self):
 
     sentences = []
-    tagged = []
     text = self.glob ()
 
     for sentence in nltk.sent_tokenize (text, language = self.language):
