@@ -15,16 +15,47 @@
 # along with pd4words. If not, see <http://www.gnu.org/licenses/>.
 #
 from argparse import ArgumentParser
+from ebook import Ebook
 from words import Words
+import nltk, os
+
+nltk_models = [ 'punkt', 'wordnet' ]
+nltk_path = os.path.realpath ('./nltk/')
 
 def program ():
 
   parser = ArgumentParser (description = 'pd4words')
 
   # Options
+  parser.add_argument ('--language', help = 'Language to use', metavar = 'LANGUAGE', type = str, default = 'spanish')
 
   # Subsystems
+  parser.add_argument ('--complexity', help = 'Measure EBook language complexity', metavar = 'FILE', type = str)
 
   args = parser.parse_args ()
+
+  # Get nltk ready
+
+  if os.path.exists (nltk_path):
+
+    nltk.data.path.append (nltk_path)
+
+  else:
+
+    os.makedirs (nltk_path)
+
+    nltk.data.path.append (nltk_path)
+
+    for model in nltk_models:
+
+      nltk.download (model, download_dir = nltk_path)
+
+  language = args.language
+
+  if args.complexity != None:
+
+    ebook = Ebook (args.complexity, language = language)
+    words = ebook.words ()
+    print (words)
 
 program ()
