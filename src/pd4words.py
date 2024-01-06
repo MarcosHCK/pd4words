@@ -16,7 +16,7 @@
 #
 from argparse import ArgumentParser
 from ebook import Ebook
-from words import Words
+from measures import Complexity
 import nltk, os
 
 nltk_models = [ 'punkt', 'wordnet' ]
@@ -56,6 +56,7 @@ def program ():
 
     ebook = Ebook (args.complexity, language = language)
     words = ebook.words ()
-    print (words)
+
+    print (Complexity (words))
 
 program ()
