@@ -20,18 +20,25 @@ from dateutil.parser import isoparse
 from peewee import fn
 import os
 
-def Curate (database : str) -> dict[int, str]:
+def Curate (database : str, first_year : int) -> dict[int, str]:
 
   biblio = Biblio (database)
   books = {}
 
   Books = biblio.Books
+  Data = biblio.Data
+
   years = Books.select (fn.strftime ('%Y', Books.pubdate)).order_by (fn.strftime ('%Y', Books.pubdate))
+  years = years.scalars ()
 
-  for year in years.scalars ():
+  if first_year != None:
 
-    sample = Books.select (Books.path).where (fn.strftime ('%Y', Books.pubdate) == str (year)).limit (10)
-    sample = [ book for book in sample.scalars () ]
+    years = ( year for year in years if int (year) >= first_year )
+
+  for year in years:
+
+    sample = Books.select (Data.format, Data.name, Books.path, Books.title).join (Data, on = (Books.id == Data.book)).where (fn.strftime ('%Y', Books.pubdate) == str (year)).limit (10)
+    sample = [ (book.data.format, book.data.name, book.path, book.title) for book in sample ]
     books [year] = sample
 
   return books

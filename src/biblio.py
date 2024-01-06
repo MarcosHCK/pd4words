@@ -367,9 +367,9 @@ class Biblio ():
 
 		class Data (BaseModel):
 
-			book = UnknownField (index=True, null=True)  # INTEGER NON
-			format = UnknownField (index=True, null=True)  # TEXT NON
-			name = UnknownField (null=True)  # TEXT NON
+			book = IntegerField (index=True, null=False)  # INTEGER NON
+			format = TextField (index=True, null=False)  # TEXT NON
+			name = TextField (null=False)  # TEXT NON
 			uncompressed_size = UnknownField (null=True)  # INTEGER NON
 
 			class Meta:

@@ -15,6 +15,7 @@
 # along with pd4words. If not, see <http://www.gnu.org/licenses/>.
 #
 from argparse import ArgumentParser
+from article import Article
 from curate import Curate
 from ebook import Ebook
 from measures import Complexity
@@ -33,9 +34,12 @@ def program ():
   parser = ArgumentParser (description = 'pd4words')
 
   # Options
+  parser.add_argument ('--first-year', help = 'First year to lookup when curating library', type = int, default = None)
   parser.add_argument ('--language', help = 'Language to use', metavar = 'LANGUAGE', type = str, default = 'spanish')
+  parser.add_argument ('--library-root', help = 'Library DIRECTORY to load books from', metavar = 'DIRECTORY', type = str, default = '.')
 
   # Subsystems
+  parser.add_argument ('--article', help = 'Prepare the article using book list in FILE', metavar = 'FILE', type = str)
   parser.add_argument ('--complexity', help = 'Measure EBook language-wise complexity', metavar = 'FILE', type = str)
   parser.add_argument ('--curate', help = 'Compile a list of books per year from Calibe-compatible library metadata', metavar = 'FILE', type = str)
   parser.add_argument ('--length', help = 'Measure EBook language-wise length', metavar = 'FILE', type = str)
@@ -64,7 +68,14 @@ def program ():
   except LanguageNotFoundError:
     language = Language.from_name (args.language.capitalize ())
 
-  if args.complexity != None:
+  if args.article != None:
+
+    article = Article (args.article, args.library_root)
+    article = json.dumps (article, indent = 2)
+
+    print (article)
+
+  elif args.complexity != None:
 
     ebook = Ebook (args.complexity, language = language.name.lower ())
     words = ebook.words ()
@@ -73,7 +84,7 @@ def program ():
 
   elif args.curate != None:
 
-    books = Curate (args.curate)
+    books = Curate (args.curate, args.first_year)
     books = json.dumps (books, indent = 2)
 
     print (books)
