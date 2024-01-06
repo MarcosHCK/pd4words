@@ -48,6 +48,10 @@ def Complexity (words : dict[str, int]) -> float:
 
   return rank
 
+def Length (words : dict[str, int]) -> int:
+
+  return sum (words.values ())
+
 def Repetitiveness (words : dict[str, int]) -> float:
 
   total = sum (words.values ())
