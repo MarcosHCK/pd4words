@@ -1,6 +1,11 @@
 Pd4Words THANKS
 ===============
 
+Some icons:
+
+Flaticon.com
+<https://www.flaticon.com/>
+
 Other software and pieces of code:
 
 D. Goldhahn, T. Eckart & U. Quasthoff: Building Large Monolingual Dictionaries at the Leipzig Corpora Collection: From 100 to 200 Languages.
