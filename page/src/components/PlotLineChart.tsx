@@ -17,22 +17,22 @@
 import { Alert } from 'reactstrap'
 import { PlotProps } from '../services/Plot.tsx'
 import { useStats } from '../services/StatsProvider.tsx'
-import { VictoryBar, VictoryChart, VictoryChartProps, VictoryTheme } from 'victory'
+import { VictoryChart, VictoryChartProps, VictoryLine, VictoryTheme } from 'victory'
 import React from 'react'
 
-export function PlotBarChart ({ barName, ...rest } : PlotProps & VictoryChartProps)
+export function PlotLineChart ({ barName, ...rest } : PlotProps & VictoryChartProps)
 {
-  const [ plotBars, broken ] = useStats ()
+  const [ plotValueGroups, broken ] = useStats ()
 
   if (broken !== undefined)
     return <Alert color='danger'>Data acquisition failed!</Alert>
-  else if (plotBars === undefined)
+  else if (plotValueGroups === undefined)
     return <Alert color='primary'>Please wait...</Alert>
   else
     return (
       <>
         <VictoryChart theme={VictoryTheme.material} scale={{ x: 'linear', y: 'linear' }} {...rest}>
-          <VictoryBar data={plotBars[barName]} style={{ data: { strokeWidth: 1 } }} />
+          <VictoryLine data={plotValueGroups[barName]} style={{ data: { strokeWidth: 1 } }} />
         </VictoryChart>
       </>)
 }

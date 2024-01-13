@@ -16,6 +16,8 @@
  */
 import { StatsProvider } from '../services/StatsProvider.tsx'
 import { PlotBarChart } from './PlotBarCart.tsx'
+import { PlotLineChart } from './PlotLineChart.tsx'
+import { PlotScatterChart } from './PlotScatterChart.tsx'
 import React from 'react'
 
 export function Article ()
@@ -27,6 +29,12 @@ export function Article ()
         <PlotBarChart barName='complexity' domainPadding={0} />
         <PlotBarChart barName='length' domainPadding={0} />
         <PlotBarChart barName='repetitiveness' domainPadding={0} />
+        <PlotLineChart barName='complexity' domainPadding={0} />
+        <PlotLineChart barName='length' domainPadding={0} />
+        <PlotLineChart barName='repetitiveness' domainPadding={0} />
+        <PlotScatterChart barName='complexity' domainPadding={0} />
+        <PlotScatterChart barName='length' domainPadding={0} />
+        <PlotScatterChart barName='repetitiveness' domainPadding={0} />
       </StatsProvider>
     </>)
 }

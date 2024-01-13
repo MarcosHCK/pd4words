@@ -16,21 +16,7 @@
  */
 
 export type BookStats = [ string, StatsDigest ]
-export type PlotSteps = Array<PlotStep>
 export type YearStats = Array<BookStats>
-
-export interface PlotBars
-{
-  complexity : PlotSteps,
-  length : PlotSteps,
-  repetitiveness : PlotSteps,
-}
-
-export interface PlotStep
-{
-  value : number,
-  year : number,
-}
 
 export interface Stats
 {

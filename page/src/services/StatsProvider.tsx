@@ -16,14 +16,14 @@
  */
 import { avg_repetitiveness } from '../services/Stats.tsx'
 import { createContext, useContext } from 'react'
-import { PlotBars, PlotSteps } from '../services/Stats.tsx'
+import { PlotValueGroups, PlotValues } from '../services/Plot.tsx'
 import { Stats } from '../services/Stats.tsx'
 import { total_complexity } from '../services/Stats.tsx'
 import { total_length } from '../services/Stats.tsx'
 import React, { useEffect, useState } from 'react'
 const statsContext = createContext<StatsProviderValue> ([undefined, undefined])
 
-export type StatsProviderValue = [ PlotBars | undefined, string | undefined ]
+export type StatsProviderValue = [ PlotValueGroups | undefined, string | undefined ]
 
 export function useStats ()
 {
@@ -34,15 +34,15 @@ export function StatsProvider (props)
 {
   const { children } = props
   const [ broken, setBroken ] = useState<string | undefined> ()
-  const [ plotBars, setPlotBars ] = useState<PlotBars | undefined> ()
+  const [ plotValueGroups, setPlotValueGroups ] = useState<PlotValueGroups | undefined> ()
 
   useEffect (() =>
     {
       const processData = async (stats : Stats) =>
         {
-          let complexity_r : PlotSteps = []
-          let length_r : PlotSteps = []
-          let repetitiveness_r : PlotSteps = []
+          let complexity_r : PlotValues = []
+          let length_r : PlotValues = []
+          let repetitiveness_r : PlotValues = []
           let max_length = 0
 
           for (const year in stats)
@@ -54,21 +54,21 @@ export function StatsProvider (props)
 
               max_length = length > max_length ? length : max_length
 
-              complexity_r = [{value: complexity, year: Number (year)}, ...complexity_r]
-              length_r = [{value: length, year: Number (year)}, ...length_r]
-              repetitiveness_r = [{value: repetitiveness, year: Number (year)}, ...repetitiveness_r]
+              complexity_r = [{y: complexity, x: Number (year)}, ...complexity_r]
+              length_r = [{y: length, x: Number (year)}, ...length_r]
+              repetitiveness_r = [{y: repetitiveness, x: Number (year)}, ...repetitiveness_r]
             }
 
-          length_r = length_r.map (step => { return { ...step, value: step.value / max_length } })
+          length_r = length_r.map (step => { return { ...step, y: step.y / max_length } })
         return {complexity: complexity_r, length: length_r, repetitiveness: repetitiveness_r}
         }
 
-      if (plotBars === undefined && broken === undefined)
+      if (plotValueGroups === undefined && broken === undefined)
         {
           fetch ('/article.json')
             .then (response => response.json ())
             .then (json => processData (json))
-            .then (data => setPlotBars (data))
+            .then (data => setPlotValueGroups (data))
             .catch (reason => { setBroken (reason) })
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,7 +77,7 @@ export function StatsProvider (props)
   return (
     <>
       <statsContext.Provider
-        value={[plotBars, broken]}>
+        value={[ plotValueGroups, broken ]}>
           {children}
       </statsContext.Provider>
     </>)
