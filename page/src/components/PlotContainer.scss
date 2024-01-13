@@ -15,32 +15,18 @@
  * along with pd4words. If not, see <http://www.gnu.org/licenses/>.
  */
 
-export type PlotValues = Array<PlotValue>
-
-export interface PlotProps
+@media (min-width: 520px)
 {
-  barName: string,
+  div.plot-container
+    {
+      width: 65%;
+    }
 }
 
-export interface PlotValue
+@media (max-width: 1000px)
 {
-  x: number,
-  y: number,
-}
-
-export interface PlotValueGroups
-{
-  complexity: PlotValues,
-  length: PlotValues,
-  repetitiveness: PlotValues,
-}
-
-export interface PlotValueLabeled extends PlotValue
-{
-  label: string,
-}
-
-export function plotIsLabeled (obj: any): obj is PlotValueLabeled
-{
-  return obj && typeof obj.name === 'string' && typeof obj.label === 'string'
+  div.plot-container
+    {
+      width: 90%;
+    }
 }

@@ -14,18 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with pd4words. If not, see <http://www.gnu.org/licenses/>.
  */
-import './App.css'
-import 'bootstrap/dist/css/bootstrap.css'
 import { Article } from './components/Article.tsx'
-import { Container } from 'reactstrap'
 import React from 'react'
 
 export function App ()
 {
-  return (
-    <Container tag='main'>
-      <Article />
-    </Container>)
+  return <Article />
 }
 
 export default App

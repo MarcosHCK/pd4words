@@ -14,33 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with pd4words. If not, see <http://www.gnu.org/licenses/>.
  */
+import './PlotContainer.scss'
+import { PlotLineChart } from './PlotLineChart.tsx'
+import { PlotScatterChart } from './PlotScatterChart.tsx'
+import React from 'react'
 
-export type PlotValues = Array<PlotValue>
-
-export interface PlotProps
+export interface PlotContainerProps
 {
-  barName: string,
+  description: string,
+  variable: string,
 }
 
-export interface PlotValue
+export function PlotContainer ({ description, variable } : PlotContainerProps)
 {
-  x: number,
-  y: number,
-}
+  return (
+    <>
+      <div className='mx-auto d-block text-center plot-container'>
 
-export interface PlotValueGroups
-{
-  complexity: PlotValues,
-  length: PlotValues,
-  repetitiveness: PlotValues,
-}
+        <PlotScatterChart barName={variable} domainPadding={0} />
 
-export interface PlotValueLabeled extends PlotValue
-{
-  label: string,
-}
-
-export function plotIsLabeled (obj: any): obj is PlotValueLabeled
-{
-  return obj && typeof obj.name === 'string' && typeof obj.label === 'string'
+        <p>
+          <i>{description}</i>
+        </p>
+      </div>
+    </>)
 }

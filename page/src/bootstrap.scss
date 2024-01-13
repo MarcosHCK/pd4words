@@ -15,32 +15,26 @@
  * along with pd4words. If not, see <http://www.gnu.org/licenses/>.
  */
 
-export type PlotValues = Array<PlotValue>
+$body-bg: #f7fcf6;
+$body-color: black;
 
-export interface PlotProps
-{
-  barName: string,
-}
+$primary: #2c394c;
+$secondary: #555;
 
-export interface PlotValue
-{
-  x: number,
-  y: number,
-}
+$custom-colors: (
+  "primary": $primary,
+  "secondary": $secondary
+);
 
-export interface PlotValueGroups
-{
-  complexity: PlotValues,
-  length: PlotValues,
-  repetitiveness: PlotValues,
-}
+$font-family-base: 'Oxygen', sans-serif;
 
-export interface PlotValueLabeled extends PlotValue
-{
-  label: string,
-}
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
 
-export function plotIsLabeled (obj: any): obj is PlotValueLabeled
+// Merge colors map
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+h1, h2, h3, h4, h5, h6
 {
-  return obj && typeof obj.name === 'string' && typeof obj.label === 'string'
+  color: $primary;
 }

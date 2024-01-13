@@ -25,14 +25,20 @@ const statsContext = createContext<StatsProviderValue> ([undefined, undefined])
 
 export type StatsProviderValue = [ PlotValueGroups | undefined, string | undefined ]
 
+export interface StatsProviderProps
+{
+  children: React.ReactNode,
+  source : string,
+}
+
 export function useStats ()
 {
   return useContext (statsContext)
 }
 
-export function StatsProvider (props)
+export function StatsProvider (props : StatsProviderProps)
 {
-  const { children } = props
+  const { children, source } = props
   const [ broken, setBroken ] = useState<string | undefined> ()
   const [ plotValueGroups, setPlotValueGroups ] = useState<PlotValueGroups | undefined> ()
 
@@ -65,7 +71,7 @@ export function StatsProvider (props)
 
       if (plotValueGroups === undefined && broken === undefined)
         {
-          fetch ('/article.json')
+          fetch (source)
             .then (response => response.json ())
             .then (json => processData (json))
             .then (data => setPlotValueGroups (data))

@@ -14,3 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with pd4words. If not, see <http://www.gnu.org/licenses/>.
  */
+import './Portrait.scss'
+import { Container } from 'reactstrap'
+import React from 'react'
+
+export interface PortraitProps
+{
+  alt?: string,
+  description?: string,
+  src: string,
+}
+
+export function Portrait ({ alt = '', description = '', src } : PortraitProps)
+{
+  return (
+    <>
+      <Container className='text-center portrait'>
+
+        <img alt={alt} className='mx-auto d-block portrait' src={src} />
+
+        <p className='portrait'>
+          <i>{description}</i>
+        </p>
+      </Container>
+    </>)
+}

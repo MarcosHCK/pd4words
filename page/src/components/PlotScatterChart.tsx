@@ -15,15 +15,21 @@
  * along with pd4words. If not, see <http://www.gnu.org/licenses/>.
  */
 import { Alert } from 'reactstrap'
-import { PlotProps, PlotValues } from '../services/Plot.tsx'
+import { PlotProps, PlotValue, PlotValues, plotIsLabeled } from '../services/Plot.tsx'
 import { useStats } from '../services/StatsProvider.tsx'
-import { VictoryChart, VictoryChartProps, VictoryLine, VictoryScatter, VictoryTheme } from 'victory'
+import { VictoryChart, VictoryChartProps, VictoryLine, VictoryScatter, VictoryTheme, VictoryTooltip } from 'victory'
 import React, { useEffect, useState } from 'react'
 
 export function PlotScatterChart ({ barName, ...rest } : PlotProps & VictoryChartProps)
 {
   const [ plotValueGroups, broken ] = useStats ()
   const [ trendLine, setTrendLine ] = useState<PlotValues | undefined> ()
+
+  const labels = ({ datum } : { datum : PlotValue }) =>
+    {
+      const item = datum
+      return plotIsLabeled (item) ? item.label : `x = ${item.x}\ny = ${item.y}`
+    }
 
   useEffect (() =>
     {
@@ -65,7 +71,7 @@ export function PlotScatterChart ({ barName, ...rest } : PlotProps & VictoryChar
       <>
         <VictoryChart theme={VictoryTheme.material} scale={{ x: 'linear', y: 'linear' }} {...rest}>
           <VictoryLine data={trendLine} style={{ data: { strokeWidth: 1 } }} />
-          <VictoryScatter data={plotValueGroups[barName]} size={1} />
+          <VictoryScatter data={plotValueGroups[barName]} size={1} labels={labels} labelComponent={<VictoryTooltip />} />
         </VictoryChart>
       </>)
 }
