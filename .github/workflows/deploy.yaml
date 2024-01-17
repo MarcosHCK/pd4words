@@ -15,12 +15,31 @@
 # along with pd4words. If not, see <http://www.gnu.org/licenses/>.
 #
 
-/.vscode/**
+name: Build and Deploy in GitHub Pages
 
-*/__pycache__/**
+on:
+ push:
+   branches:
+     - master
 
-/env/**
-/keys/**
-/nltk/**
-/.environment
-/.python-version
+jobs:
+ deploy:
+   concurrency: ci-${{ github.ref }}
+   runs-on: ubuntu-latest
+   steps:
+
+     - name: Checkout 🛎️
+       uses: actions/checkout@v3
+
+     - name: Install and Build 🔧
+       working-directory: page/
+       run: |
+         npm ci
+         npm run build
+
+     - name: Deploy 🚀
+       uses: JamesIves/github-pages-deploy-action@v4
+       with:
+         folder: page/build/
+         clean: true
+         ssh-key: ${{ secrets.DEPLOY_KEY }}

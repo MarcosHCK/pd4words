@@ -15,7 +15,6 @@
  * along with pd4words. If not, see <http://www.gnu.org/licenses/>.
  */
 import './PlotContainer.scss'
-import { PlotLineChart } from './PlotLineChart.tsx'
 import { PlotScatterChart } from './PlotScatterChart.tsx'
 import React from 'react'
 
