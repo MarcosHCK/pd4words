@@ -16,6 +16,7 @@
  */
 import '../bootstrap.scss'
 import { Container, Navbar } from 'reactstrap'
+import { localUrl } from '../services/Url.tsx'
 import { PlotContainer } from './PlotContainer.tsx'
 import { Portrait } from './Portrait.tsx'
 import { StatsProvider } from '../services/StatsProvider.tsx'
@@ -42,7 +43,7 @@ export function Article ()
 
         <hr className='divider' />
 
-        <StatsProvider source='/article.json'>
+        <StatsProvider source={localUrl ('article.json')}>
 
           <div>
 
@@ -56,8 +57,8 @@ export function Article ()
               como sus objetos centrales. Sin embargo, el arte contemporáneo impacta con su minimalismo.
             </p>
 
-            <Portrait src='/Virgen de las Rocas.jpg' description='La Virgen de las Rocas, Leonardo Da Vinci, 1483-1486' />
-            <Portrait src='/The Gathering Anguish Strikes Beneath.jpg' description='The Gathering Anguish Strikes Beneath..., John Murphy, 1945' />
+            <Portrait src={localUrl ('Virgen de las Rocas.jpg')} description='La Virgen de las Rocas, Leonardo Da Vinci, 1483-1486' />
+            <Portrait src={localUrl ('The Gathering Anguish Strikes Beneath.jpg')} description='The Gathering Anguish Strikes Beneath..., John Murphy, 1945' />
 
             <p>
               Para los artistas es un reflejo de las complejidades y distracciones de la vida moderna, donde los artistas buscan deshacerse del exceso y centrarse
