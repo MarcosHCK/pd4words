@@ -34,6 +34,11 @@ $font-family-base: 'Oxygen', sans-serif;
 // Merge colors map
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
+p.indented-paragraph
+{
+  text-indent: 13px;
+}
+
 h1, h2, h3, h4, h5, h6
 {
   color: $primary;
