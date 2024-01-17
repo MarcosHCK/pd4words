@@ -20,6 +20,7 @@
 */__pycache__/**
 
 /env/**
+/keys/**
 /nltk/**
 /.environment
 /.python-version
