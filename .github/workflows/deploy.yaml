@@ -42,4 +42,5 @@ jobs:
        with:
          folder: page/build/
          clean: true
+         clean-exclude: article.json
          ssh-key: ${{ secrets.DEPLOY_KEY }}
