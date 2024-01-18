@@ -15,12 +15,5 @@
 # along with pd4words. If not, see <http://www.gnu.org/licenses/>.
 #
 
-/.vscode/**
-
-*/__pycache__/**
-
-/env/**
-/keys/**
-/nltk/**
-/.environment
-/.python-version
+article.json
+books.json

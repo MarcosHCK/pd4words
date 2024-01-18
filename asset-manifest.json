@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/pd4words/static/css/main.0df62245.css",
+    "main.js": "/pd4words/static/js/main.5e0a8920.js",
+    "static/js/787.336f068a.chunk.js": "/pd4words/static/js/787.336f068a.chunk.js",
+    "index.html": "/pd4words/index.html",
+    "main.0df62245.css.map": "/pd4words/static/css/main.0df62245.css.map",
+    "main.5e0a8920.js.map": "/pd4words/static/js/main.5e0a8920.js.map",
+    "787.336f068a.chunk.js.map": "/pd4words/static/js/787.336f068a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0df62245.css",
+    "static/js/main.5e0a8920.js"
+  ]
+}
